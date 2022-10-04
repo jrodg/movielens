@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   database:
@@ -15,7 +15,9 @@ services:
 
   server:
     build:
-      context: ./srv
+      context: .
+      args:
+        - Dev=true
     container_name: movielens_server
     depends_on:
       - database
@@ -26,11 +28,13 @@ services:
       - SQL_PASSWORD=''
       - SQL_HOST=localhost
       - SQL_PORT=5432
-    command: ["bash", "start.sh"]
+
     ports:
-      - 8003:8000
+      - 8000:8000
     volumes:
-      - ./srv:/usr/src/app
+      - ./app:/srv
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
 
 volumes:
   movielens-database:

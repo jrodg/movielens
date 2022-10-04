@@ -6,7 +6,8 @@ docker access token: py_apy
 
 login:
 docker login -u jrod201d
-========================
+
+docker-compose run --rm srv sh -c "python manage.py collectstatic"
 
 # view elasticsearch networks:
 
@@ -51,6 +52,11 @@ docker ps -a
 docker-compose up -d
 
 =======================
+
+# view active container list
+
+docker container ls  
+docker rm -f movielens-srv
 
 # update requirements
 
