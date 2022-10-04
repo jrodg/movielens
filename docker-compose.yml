@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  database:
+    container_name: movielens-database
+    environment:
+      - POSTGRES_DB=movielens
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=user@dev
+    image: postgres:14.5
+    ports:
+      - "5433:5432"
+    volumes:
+      - movielens-database:/var/lib/postgresql/data
+
+  server:
+    build:
+      context: ./srv
+    container_name: perusable-srv
+    depends_on:
+      - database
+    environment:
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=movielens
+      - SQL_USER=postgres
+      - SQL_PASSWORD=
+      - SQL_HOST=localhost
+      - SQL_PORT=5432
+    command: ["bash", "start.sh"]
+    ports:
+      - 8003:8000
+    volumes:
+      - ./srv:/usr/src/app
+
+volumes:
+  movielens-database:
