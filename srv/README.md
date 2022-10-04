@@ -62,3 +62,16 @@ pip install -r requirements.dev.txt
 
 chmod +x start.sh
 ./start.sh
+
+==================
+
+# make migration:
+
+docker-compose exec srv python manage.py makemigrations moviesdoamin
+apply changes:
+docker-compose exec srv python manage.py migrate
+==============
+
+# createsuperuser
+
+docker-compose exec srv python manage.py createsuperuser
